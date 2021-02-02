@@ -18,7 +18,7 @@ public:
 
     bool is_next_file();
     size_t get_entry_size();
-    void read_next_file(char *file_content_pt, size_t size);
+    void read_next_file(void *file_content_pt, size_t size);
 
     // TODO is this method required?
     void close();

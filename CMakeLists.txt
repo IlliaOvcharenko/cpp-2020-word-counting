@@ -19,7 +19,9 @@ add_executable(cpp_2020_word_counting
         src/archive_wrapper.h
         src/text_utils.cpp
         src/text_utils.h
-        )
+        src/thread_safe_queue.h
+        src/time_measurement.h
+)
 target_link_libraries(cpp_2020_word_counting ${Boost_LIBRARIES})
 target_link_libraries(cpp_2020_word_counting archive)
 
@@ -29,6 +31,12 @@ add_executable(
         dev_queue.cpp
 
         src/thread_safe_queue.h
-        )
+)
 target_link_libraries(dev_queue PRIVATE Threads::Threads)
+
+
+add_executable(
+        sandbox
+        sandbox.cpp
+)
 

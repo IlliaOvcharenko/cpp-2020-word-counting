@@ -20,7 +20,7 @@ void add_value_in_queue(int value, queue_type& q, int sleep_time=1) {
 void get_value_from_queue(queue_type& q, int sleep_time=1) {
     while(true) {
         std::this_thread::sleep_for(std::chrono::seconds(sleep_time));
-        auto val = q.front_pop();
+        auto val = q.pop();
         std::cout << "pop number: " << val.first << " from thread: " << val.second << std::endl;
     }
 }
