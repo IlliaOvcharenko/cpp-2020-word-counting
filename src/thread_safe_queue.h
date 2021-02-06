@@ -23,10 +23,10 @@ class ThreadSafeQueue {
     bool is_finished;
     std::mutex write_mutex_m;
 
-    int upper_bound_m;
     std::condition_variable upper_bound_cv_m;
     std::condition_variable empty_cv_m;
 public:
+    int upper_bound_m;
 
 
     explicit ThreadSafeQueue(int upper_bound) : upper_bound_m(upper_bound), is_finished(false) { }
