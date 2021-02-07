@@ -4,10 +4,8 @@ void text_to_vocabulary(std::string&& str, vocabulary_type& vocab) {
     str = lc::normalize(str);
     str = lc::fold_case(str);
 
-//    std::cout << "file content size: " <<  str.length() << std::endl;
-
     lc::boundary::ssegment_index map(lc::boundary::word, str.begin(), str.end());
-    map.rule(lc::boundary::word_any);
+    map.rule(lc::boundary::word_letters);
     for(auto split_itr = map.begin(), e = map.end(); split_itr != e; ++split_itr) {
         auto vocab_itr = vocab.find(*split_itr);
         if (vocab_itr != vocab.end()) {

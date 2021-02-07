@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -13,7 +14,7 @@
 
 namespace fs = std::experimental::filesystem;
 const int MAX_ARCHIVE_SIZE = 10000000;
-const int MAX_ITEMS = 100;
+const int MAX_ITEMS = 10000;
 // TODO make static
 const bool VERBOSE = true;
 
@@ -200,6 +201,7 @@ void merge_vocabularies(
                 first.insert(vocab_pair);
             }
         }
+        second.clear();
         p.set_value(std::move(first));
         log.print("add merged vocabulary");
     }
@@ -209,14 +211,14 @@ int main() {
     auto start_time = get_current_time_fenced();
     std::string data_folder = "../data";
 
-    ThreadSafeQueue<std::string> filename_queue(200);
+    ThreadSafeQueue<std::string> filename_queue(100);
     std::thread get_filenames_thread(get_filenames, std::ref(data_folder), std::ref(filename_queue));
 
-    ThreadSafeQueue<std::string> file_content_queue(200);
+    ThreadSafeQueue<std::string> file_content_queue(100);
     std::thread read_files_thread(read_files, std::ref(filename_queue), std::ref(file_content_queue));
 
     init_locale();
-    ThreadSafeQueue<std::future<vocabulary_type>> vocabulary_queue(200);
+    ThreadSafeQueue<std::future<vocabulary_type>> vocabulary_queue(50);
     int n_count_words_threads = 5;
     std::mutex merge_mutex;
     std::condition_variable merge_mutex_cv;
@@ -233,7 +235,7 @@ int main() {
         ));
     }
 
-    int n_merge_threads = 5;
+    int n_merge_threads = 10;
     std::vector<std::thread> merge_threads;
     for (int i = 0; i < n_merge_threads; ++i) {
         merge_threads.push_back(std::thread(
@@ -262,14 +264,19 @@ int main() {
         th.join();
     }
 
-    std::cout << std::endl;
-    std::cout << "vocabulary left: " << vocabulary_queue.size() << std::endl;
-    while (!vocabulary_queue.empty()) {
-        auto vacab = vocabulary_queue.pop().get();
-        std::cout << "vocab size: " << vacab.size() << std::endl;
-        std::cout << std::endl;
 
+    auto vocab = vocabulary_queue.pop().get();
+    std::cout << "vocab size: " << vocab.size() << std::endl;
+    std::cout << std::endl;
+
+    std::ofstream out_a_file;
+    out_a_file.open ("res_a.txt");
+
+    for (auto& p: vocab) {
+        out_a_file << p.first << "\t\t" << p.second << std::endl;
     }
+    out_a_file.close();
+
 
     auto finish_time = get_current_time_fenced();
     auto total_time = finish_time - start_time;
