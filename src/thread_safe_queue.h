@@ -19,14 +19,13 @@ public:
 template <typename T>
 class ThreadSafeQueue {
     std::queue<T> queue_m;
-//    std::mutex write_mutex_m;
     bool is_finished;
     std::mutex write_mutex_m;
+    int upper_bound_m;
 
     std::condition_variable upper_bound_cv_m;
     std::condition_variable empty_cv_m;
 public:
-    int upper_bound_m;
 
 
     explicit ThreadSafeQueue(int upper_bound) : upper_bound_m(upper_bound), is_finished(false) { }
@@ -37,7 +36,7 @@ public:
             upper_bound_cv_m.wait(locker);
         }
 
-        queue_m.push(std::forward<T>(el));
+        queue_m.push(std::move(el));
 
         empty_cv_m.notify_one();
     }
@@ -76,6 +75,10 @@ public:
 
     bool get_finished() {
         return is_finished;
+    }
+
+    int get_upper_bound() {
+        return upper_bound_m;
     }
 
     bool empty() {

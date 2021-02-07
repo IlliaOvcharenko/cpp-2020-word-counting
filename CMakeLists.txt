@@ -21,6 +21,11 @@ add_executable(cpp_2020_word_counting
         src/text_utils.h
         src/thread_safe_queue.h
         src/time_measurement.h
+        src/logger.h
+        src/stages.cpp
+        src/stages.h
+        src/output_utils.cpp
+        src/output_utils.h
 )
 target_link_libraries(cpp_2020_word_counting ${Boost_LIBRARIES})
 target_link_libraries(cpp_2020_word_counting archive)
