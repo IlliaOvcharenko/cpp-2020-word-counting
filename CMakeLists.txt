@@ -3,6 +3,8 @@ project(cpp_2020_word_counting)
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(libs/yaml-cpp)
+
 link_libraries(stdc++fs)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
@@ -29,6 +31,8 @@ add_executable(cpp_2020_word_counting
 )
 target_link_libraries(cpp_2020_word_counting ${Boost_LIBRARIES})
 target_link_libraries(cpp_2020_word_counting archive)
+target_link_libraries(cpp_2020_word_counting yaml-cpp::yaml-cpp)
+target_link_libraries(cpp_2020_word_counting Threads::Threads)
 
 
 add_executable(

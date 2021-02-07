@@ -1,0 +1,14 @@
+data_folder: ../data
+output_by_a_folder: ../results/res_a.txt
+output_by_n_folder: ../results/res_n.txt
+
+
+filename_queue_bound: 50
+file_content_queue_bound: 50
+vocabulary_queue_bound: 50
+
+count_words_threads: 4
+merge_threads: 2
+
+verbose: False
+item_limit: 10
