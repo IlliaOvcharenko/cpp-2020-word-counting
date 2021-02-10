@@ -8,7 +8,7 @@
 #include <vector>
 #include <thread>
 #include <future>
-#include <experimental/filesystem>
+#include <filesystem>
 
 #include "archive_wrapper.h"
 #include "text_utils.h"
@@ -16,7 +16,7 @@
 #include "logger.h"
 
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 const int MAX_ARCHIVE_SIZE = 10000000;
 extern int MAX_ITEMS;

@@ -7,7 +7,7 @@ void get_filenames(const std::string& data_folder, ThreadSafeQueue<std::string>&
     int fn_counter = 0;
     for (const auto& entry: fs::recursive_directory_iterator(data_folder)) {
         if (entry.path().extension() == ".zip") {
-            filename_queue.push(entry.path());
+            filename_queue.push(entry.path().string());
 
             std::stringstream ss;
             ss << "add filename: " << entry.path();
