@@ -28,5 +28,6 @@ void ArchiveReader::read_next_file(void *file_content_pt, size_t size) {
     archive_read_data(a, file_content_pt, size);
 }
 
-
-
+ArchiveReader::~ArchiveReader() {
+    archive_read_free(a);
+}

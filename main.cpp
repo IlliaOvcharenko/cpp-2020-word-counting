@@ -16,7 +16,7 @@
 #include "src/output_utils.h"
 
 bool Logger::VERBOSE;
-int MAX_ITEMS;
+size_t MAX_ITEMS;
 
 int main(int argc, char * argv[]) {
 

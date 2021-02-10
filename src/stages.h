@@ -18,8 +18,8 @@
 
 namespace fs = std::filesystem;
 
-const int MAX_ARCHIVE_SIZE = 10000000;
-extern int MAX_ITEMS;
+const size_t MAX_ARCHIVE_SIZE = 10000000;
+extern size_t MAX_ITEMS;
 
 
 void get_filenames(

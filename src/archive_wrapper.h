@@ -22,6 +22,8 @@ public:
 
     // TODO is this method required?
     void close();
+    //! O.F. This class DO needs destructor -- you need to call archive_read_free.
+    ~ArchiveReader();
 };
 
 
