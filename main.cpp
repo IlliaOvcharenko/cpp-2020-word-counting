@@ -62,25 +62,25 @@ int main(int argc, char * argv[]) {
     std::condition_variable push_during_merge_cv;
     std::vector<std::thread> count_words_threads;
     for (int i = 0; i < n_count_words_threads; ++i) {
-        count_words_threads.push_back(std::thread(
+        count_words_threads.emplace_back(
                 count_words,
                 std::ref(file_content_queue),
                 std::ref(vocabulary_queue),
                 std::ref(merge_mutex),
                 std::ref(pop_during_merge_cv),
                 std::ref(push_during_merge_cv)
-        ));
+        );
     }
 
     std::vector<std::thread> merge_threads;
     for (int i = 0; i < n_merge_threads; ++i) {
-        merge_threads.push_back(std::thread(
+        merge_threads.emplace_back(
                 merge_vocabularies,
                 std::ref(vocabulary_queue),
                 std::ref(merge_mutex),
                 std::ref(pop_during_merge_cv),
                 std::ref(push_during_merge_cv)
-        ));
+        );
     }
 
     // Join threads

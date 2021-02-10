@@ -9,12 +9,7 @@ void text_to_vocabulary(std::string&& str, vocabulary_type& vocab) {
     lc::boundary::ssegment_index map(lc::boundary::word, str.begin(), str.end());
     map.rule(lc::boundary::word_letters);
     for(auto split_itr = map.begin(), e = map.end(); split_itr != e; ++split_itr) {
-        auto vocab_itr = vocab.find(*split_itr);
-        if (vocab_itr != vocab.end()) {
-            vocab_itr->second += 1;
-        } else {
-            vocab.insert(std::make_pair(*split_itr, 1));
-        }
+        ++vocab[split_itr->str()]; //! It is the C++ map -- see operator[] behaviour.
     }
 }
 

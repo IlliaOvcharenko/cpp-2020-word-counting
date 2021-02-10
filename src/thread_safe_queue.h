@@ -21,14 +21,14 @@ class ThreadSafeQueue {
     std::queue<T> queue_m;
     bool is_finished;
     std::mutex write_mutex_m;
-    int upper_bound_m;
+    size_t upper_bound_m;
 
     std::condition_variable upper_bound_cv_m;
     std::condition_variable empty_cv_m;
 public:
 
 
-    explicit ThreadSafeQueue(int upper_bound) : upper_bound_m(upper_bound), is_finished(false) { }
+    explicit ThreadSafeQueue(size_t upper_bound) : upper_bound_m(upper_bound), is_finished(false) { }
 
     void push(T&& el) {
         std::unique_lock<std::mutex> locker(write_mutex_m);
@@ -77,7 +77,7 @@ public:
         return is_finished;
     }
 
-    int get_upper_bound() {
+    size_t get_upper_bound() {
         return upper_bound_m;
     }
 

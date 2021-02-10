@@ -49,12 +49,12 @@ int main() {
 
     std::vector<std::thread> add_threads;
     for (int i = 0; i < n_add_threads; ++i) {
-        add_threads.push_back(std::thread(add_value_in_queue, i+1, std::ref(q), 1));
+        add_threads.emplace_back(add_value_in_queue, i+1, std::ref(q), 1);
     }
 
     std::vector<std::thread> get_threads;
     for (int i = 0; i < n_get_threads; ++i) {
-        get_threads.push_back(std::thread(get_value_from_queue, std::ref(q), 1));
+        get_threads.emplace_back(get_value_from_queue, std::ref(q), 1);
     }
 
     std::thread print_th(print_queue, std::ref(q));
